@@ -1,52 +1,61 @@
 <html>
+
 <head>
-  <script type="text/javascript"
-   src="http://maps.google.com/maps/api/js?sensor=false"></script>
-  <script type="text/javascript"
-   src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
-  </script>
-  <script type="text/javascript" src="jquery.timezone-picker.js">
-  </script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+    </script>
+    <script type="text/javascript" src="jquery.timezone-picker.js">
+    </script>
+    <script>
+    $(function() {
 
-  <script>
-  $(function() {
-    $("#zonepicker").timezonePicker({
-      initialLat: 20,
-      initialLng: 0,
-      initialZoom: 2,
-      onReady: function() {
-        $("#zonepicker").timezonePicker('selectZone', 'America/New_York');
-      },
-      onHover: function(utcOffset, tzNames) {
-        $('#label').text(tzNames.join(',') + ': ' + utcOffset + ' minutes');
-      },
-      mapOptions: {
-        maxZoom: 6,
-        minZoom: 2
-      }
+        $('#zonepicker').timezonePicker({
+            initialLat: 20,
+            initialLng: 0,
+            initialZoom: 2,
+            jsonRootUrl: window.location.origin + '/js/Library/tz_json/', // this will help us to draw the polygons on mousehover of the map
+            onReady: function() {
+                $("#zonepicker").timezonePicker('selectZone', 'America/New_York');
+            },
+            onHover: function(utcOffset, tzNames) {
+                $('#label').text(tzNames.join(',') + ': ' + utcOffset + ' minutes');
+            },
+            mapOptions: {
+                center: new window.google.maps.LatLng(0, 0),
+                minZoom: 2,
+                maxZoom: 5,
+                streetViewControl: false,
+                zoomControl: true,
+                zoomControlOptions: {
+                    position: window.google.maps.ControlPosition.RIGHT_BOTTOM
+                },
+                mapTypeControl: false,
+                scrollwheel: false,
+                styles: JSON.parse('[{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"administrative.country","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"administrative.country","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"administrative.locality","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#EBEBEB"},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry.stroke","stylers":[{"saturation":"-14"},{"lightness":"-11"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"saturation":"-41"},{"lightness":"-20"},{"gamma":"3.93"}]},{"featureType":"landscape.natural","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#FFFFFF"},{"visibility":"on"}]}]')
+            }
+        });
     });
-  });
-  </script>
-
-  <style>
+    </script>
+    <style>
     .timezone-picker-infowindow {
-      color: #444;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 12px;
-      text-align: left;
+        color: #444;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        text-align: left;
     }
-
+    
     .timezone-picker-infowindow h2 {
-      margin: 4px 0;
+        margin: 4px 0;
     }
-
-  </style>
+    </style>
 </head>
+
 <body>
-  <center>
-    <div id="zonepicker" style="width: 960px; height: 500px;">
-    </div>
-    <div id="label"></div>
-  </center>
+    <center>
+        <div id="zonepicker" style="width: 960px; height: 500px;">
+        </div>
+        <div id="label"></div>
+    </center>
 </body>
+
 </html>
